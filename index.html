@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship Destroyer</title>
+    <link rel="stylesheet" href="styling.css">
+</head>
+
+<body>
+
+    <nav>
+        <ul id="HealthBars">
+            <li id="userHealth">
+                <h5 id="userName">The Jelly Robin</h5>
+                <div id="userHealthBarRed"></div>
+                <div id="userHealthBarGreen"></div>
+                <h4 id="userHealthNum">100</h4>
+            </li>
+
+            <li id="enemyHealth">
+                <h5 id="enemyName">Drifting Moss</h5>
+                <div id="enemyHealthBarRed"></div>
+                <div id="enemyHealthBarGreen"></div>
+                <h4 id="enemyHealthNum">100</h4>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <div id="userShip">The Jelly Robin</div>
+        <div id="enemyShip">Drifting Moss</div>
+    </main>
+
+    <div id="waves">
+
+    </div>
+
+    <footer>
+        <div class="footFlex">
+            <h2 id="attackButton">Attack</h2>
+            <h2 id="healButton">Heal</h2>
+        </div>
+    </footer>
+<script src="./ShipFactoryYard.js"></script>
+</body>
+</html>
