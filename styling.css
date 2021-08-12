@@ -201,8 +201,7 @@ footer {
 
 @keyframes Waves {
     0% {
-        transform: translate(0, 0);
-        ;   
+        transform: translate(0, 0);   
     }
     20% {
         transform:translate(0, 2px);
@@ -218,6 +217,15 @@ footer {
     }
     100% {
         transform: translate(0, 0);
+    }
+}
+
+@keyframes LoseAnim {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(0, 500px) rotate(50deg);
     }
 }
 
