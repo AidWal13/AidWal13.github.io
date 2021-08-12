@@ -12,7 +12,8 @@ body {
 
 nav {
     width: 100%;
-    margin-bottom: 15.75%;
+    height: 10%;
+    margin-bottom: 20%;
     transition: font-size 0.25s ease;
 }
 
@@ -20,9 +21,11 @@ nav {
 main {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5%;
+    position: absolute;
+    width: 80%;
+    bottom: 58.5%;
     margin: 0 10%;
-    
+    height: 110px;
 }
 
 
@@ -39,7 +42,7 @@ main {
 
 #userHealthBarRed {
     position: relative;
-    background-color: red;
+    background-color: rgb(216, 47, 47);
     width: 184px;
     height: 58px;
 }
@@ -118,7 +121,7 @@ main {
     display: block;
     background-color: rgb(14, 32, 90);
     position: absolute;
-    bottom: -22px;
+    bottom: 0;
     height: 60%;
     width: 100%;
     animation-name: Waves;
@@ -131,13 +134,14 @@ main {
 }
 
 footer {
+    box-sizing: border-box;
     position: fixed;
     z-index: 100;
     background-color: burlywood;
     width: 100%;
-    height: 40%;
-    top: 60%;
-    border: 6px rgb(98, 47, 17) solid;
+    height: 35%;
+    bottom: 0%;
+    border: 10px rgb(98, 47, 17) solid;
 }
 
 .footFlex {
@@ -231,10 +235,15 @@ footer {
 
 
 /*----------BREAKPOINTS----------*/
-
-@media (min-width: 2500px) {
+/*
+@media (min-height: 2000px) {
     nav {
-        width: 100%;
-        margin-bottom: 8%;
+        margin-bottom: 12.75%;
+    }
+}
+
+@media (max-height: 1700px) {
+    nav {
+        margin-bottom: 9.5%;
     }
 }
