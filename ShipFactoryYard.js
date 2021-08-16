@@ -5,7 +5,7 @@ const healButton = document.getElementById("healButton");
 healButton.addEventListener('mouseup', healUserShip);
 
 let delayedActionOneTime = 2000;
-let delayedActionTwoTime = 3750;
+let delayedActionTwoTime = 3250;
 
 //debug attack button click counter
 let atkButtonClickCount = 0;
@@ -33,6 +33,33 @@ function calculateHealAmt() {
     let healAmt = Math.floor(Math.random() * 46) + 25;
     console.log(`The amount the user ship has healed for is ${healAmt}.`);
     return healAmt;
+}
+
+function determineEnemyAction() {
+    //Retrieve the Enemy UI number displayed
+    let numberDisplayingEnemyHealth = document.getElementById("enemyHealthNum").textContent;
+    let enemyHealthAsNum = parseInt(numberDisplayingEnemyHealth);
+    console.log(`The extracted number for the health to determine the enemy action is ${enemyHealthAsNum}`)
+    
+    let randVal = Math.floor(Math.random() * 101);
+    const highHealthAttackOdds = 82;
+    const lowHealthAttackOdds = 72;
+
+    if (enemyHealthAsNum === 184) {
+        enemyAttack();
+    } else if (enemyHealthAsNum > 80) {
+        if (randVal > highHealthAttackOdds) {
+            enemyHeal();
+        } else if (randVal <= highHealthAttackOdds) {
+            enemyAttack();
+        }
+    } else {
+        if (randVal > lowHealthAttackOdds) {
+            enemyHeal();
+        } else if (randVal <= lowHealthAttackOdds) {
+            enemyAttack();
+        }
+    }
 }
 
 //function that sets the footer content back to its default
@@ -75,10 +102,10 @@ function attackEnemyShip() {
     //Alter webpage to display hit or miss
     if (accuracyRoll > 78) { 
         footer.innerHTML = '<h2 id="missMessage">You missed!</h2>'
-        setTimeout(enemyTurn, 2000);
+        setTimeout(determineEnemyAction, 2000);
     } else if (accuracyRoll <= 78) {
         let hitAmt = calculateHitDmgAmt();
-        footer.innerHTML = `<h2 id=hitMessage> You have hit for ${hitAmt}!</h2>`
+        footer.innerHTML = `<h2 id=hitMessage> You hit the enemy ship for ${hitAmt}!</h2>`
         //Update Health Number
         let newHealthNum = enemyHealthAsNum - hitAmt;
 
@@ -86,7 +113,7 @@ function attackEnemyShip() {
             document.getElementById("enemyHealthNum").textContent = newHealthNum;
             //Update Health Bar
             greenHealthBar.style.width = `${newHealthNum}px`;
-            setTimeout(enemyTurn, 2000);
+            setTimeout(determineEnemyAction, 2000);
         } else if (newHealthNum <= 0) {
             document.getElementById("enemyHealthNum").textContent = 0;
             //Update Health Bar
@@ -112,7 +139,7 @@ function healUserShip() {
     let healAmt = calculateHealAmt();
     let newHealthNum = userHealthAsNum + healAmt;
     
-    footer.innerHTML = `<h2 id=healMessage> You have healed for ${healAmt}!</h2>`
+    footer.innerHTML = `<h2 id=healMessage> You repaired your ship for ${healAmt} worth of damage!</h2>`
         
     //Update Health Number
     if (newHealthNum < 184) {
@@ -124,12 +151,12 @@ function healUserShip() {
         //Update Health Bar
         greenHealthBar.style.width = `184px`;
     }
-    setTimeout(enemyTurn, delayedActionOneTime);
+    setTimeout(determineEnemyAction, delayedActionOneTime);
     }
 }
 
 
-function enemyTurn() {
+function enemyAttack() {
     //Retrieve the UI number displayed
     let numberDisplayingUserHealth = document.getElementById("userHealthNum").textContent;
     let userHealthAsNum = parseInt(numberDisplayingUserHealth);
@@ -138,17 +165,14 @@ function enemyTurn() {
     //Retrieve the green bar in the UI
     const greenHealthBar = document.getElementById("userHealthBarGreen");//get the element
 
-    //determineEnemyAction();
-
-    //Determine hit or not
     let accuracyRoll = getAccuracyRoll()
 
-    if (accuracyRoll > 78) { 
+    if (accuracyRoll > 74) { 
         footer.innerHTML = '<h2 id="enemyMissMessage">The enemy ship missed!</h2>'
         setTimeout(returnToPlayerTurnState, delayedActionTwoTime);
-    } else if (accuracyRoll <= 78) {
+    } else if (accuracyRoll <= 74) {
         let hitAmt = calculateHitDmgAmt();
-        footer.innerHTML = `<h2 id=enemyHitMessage> You have been hit for ${hitAmt}!</h2>`
+        footer.innerHTML = `<h2 id=enemyHitMessage> The enemy ship hit us for ${hitAmt} damage!</h2>`
         //Update Health Number
         let newHealthNum = userHealthAsNum - hitAmt;
 
@@ -164,4 +188,31 @@ function enemyTurn() {
             displayLoseSituation();
         }
     }
+}
+
+function enemyHeal() {
+    //Retrieve the UI number displayed
+    let numberDisplayingEnemyHealth = document.getElementById("enemyHealthNum").textContent;
+    let enemyHealthAsNum = parseInt(numberDisplayingEnemyHealth);
+    console.log(`The extracted number for the health is ${enemyHealthAsNum}`)
+
+    //Retrieve the green bar in the UI
+    const greenHealthBar = document.getElementById("enemyHealthBarGreen");//get the element
+
+    let healAmt = calculateHealAmt();
+    let newHealthNum = enemyHealthAsNum + healAmt;
+    
+    footer.innerHTML = `<h2 id=healMessage> The enemy ship healed ${healAmt} points worth of damage!</h2>`
+        
+    //Update Health Number
+    if (newHealthNum < 184) {
+        document.getElementById("enemyHealthNum").textContent = newHealthNum;
+        //Update Health Bar
+        greenHealthBar.style.width = `${newHealthNum}px`;
+    } else if (newHealthNum >= 184) {
+        document.getElementById("enemyHealthNum").textContent = 184;
+        //Update Health Bar
+        greenHealthBar.style.width = `184px`;
+    }
+    setTimeout(returnToPlayerTurnState, delayedActionTwoTime);
 }
